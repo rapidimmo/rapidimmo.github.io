@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react'
 // Par défaut on cible un déploiement de type https://<org>.github.io/rapidimmo/
 export default defineConfig(({ mode }) => ({
   // loadEnv lit aussi .env.production / .env.local (process.env ne les contient pas ici)
-  base: loadEnv(mode, process.cwd(), 'VITE_').VITE_BASE_PATH || '/rapidimmo/',
+  base: loadEnv(mode, process.cwd(), 'VITE_').VITE_BASE_PATH || '/',
   plugins: [react()],
   server: {
     port: 5173,
