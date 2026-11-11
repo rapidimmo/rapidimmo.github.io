@@ -1,0 +1,15 @@
+rules_version = '2';
+
+// Règles de sécurité Firebase Storage pour RapidImmo.
+// Les photos d'annonces sont publiques en lecture (affichage sur le site),
+// mais seul un admin authentifié peut uploader/supprimer.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /annonces/{fichier=**} {
+      allow read: if true;
+      allow write: if request.auth != null
+                   && request.resource.size < 5 * 1024 * 1024        // 5 Mo max
+                   && request.resource.contentType.matches('image/.*');
+    }
+  }
+}

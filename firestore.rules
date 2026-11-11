@@ -1,0 +1,21 @@
+rules_version = '2';
+
+// Règles de sécurité Firestore pour RapidImmo.
+// À déployer via la console Firebase (Firestore > Règles) ou `firebase deploy --only firestore:rules`.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Annonces : lecture publique, écriture réservée aux admins authentifiés.
+    match /annonces/{id} {
+      allow read: if true;
+      allow create, update, delete: if request.auth != null;
+    }
+
+    // Messages : création publique (formulaire propriétaire),
+    // lecture / modification / suppression réservées aux admins.
+    match /messages/{id} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+  }
+}
