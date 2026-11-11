@@ -15,6 +15,8 @@ import { VILLES, TYPES_BIEN } from '../utils/constants'
 import AnnonceCard from '../components/AnnonceCard'
 import { SkeletonGrid } from '../components/SkeletonCard'
 
+const BASE = import.meta.env.BASE_URL
+
 export default function Accueil() {
   const navigate = useNavigate()
   const [recentes, setRecentes] = useState([])
@@ -41,22 +43,32 @@ export default function Accueil() {
     <div>
       {/* ───────── Hero ───────── */}
       <section className="relative isolate overflow-hidden bg-primary-950 text-white">
-        {/* halos lumineux */}
-        <div className="pointer-events-none absolute -left-40 -top-40 -z-10 h-[520px] w-[520px] rounded-full bg-primary-500/30 blur-[120px]" />
-        <div className="pointer-events-none absolute -bottom-48 right-[-10%] -z-10 h-[420px] w-[420px] rounded-full bg-secondary/15 blur-[120px]" />
-        {/* grille fine */}
-        <div
-          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06]"
-          style={{
-            backgroundImage:
-              'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)',
-            backgroundSize: '56px 56px',
-            maskImage: 'radial-gradient(ellipse at 30% 40%, black 30%, transparent 75%)',
-            WebkitMaskImage: 'radial-gradient(ellipse at 30% 40%, black 30%, transparent 75%)',
-          }}
-        />
+        {/* Vidéo de fond (Tanger, drone) — image fixe si "réduire les animations" */}
+        <div className="absolute inset-0 -z-20" aria-hidden="true">
+          <img
+            src={`${BASE}videos/hero-tanger-poster.jpg`}
+            alt=""
+            className="h-full w-full object-cover"
+          />
+          <video
+            className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster={`${BASE}videos/hero-tanger-poster.jpg`}
+          >
+            <source src={`${BASE}videos/hero-tanger-540.mp4`} type="video/mp4" media="(max-width: 767px)" />
+            <source src={`${BASE}videos/hero-tanger-1080.mp4`} type="video/mp4" />
+          </video>
+        </div>
+        {/* Voile bleu nuit : lisibilité du texte + charte */}
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-primary-950/95 via-primary-950/75 to-primary-950/35" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-primary-950/80 via-transparent to-primary-950/40" />
+        <div className="pointer-events-none absolute -bottom-48 right-[-10%] -z-10 h-[420px] w-[420px] rounded-full bg-secondary/10 blur-[120px]" />
 
-        <div className="container-page pb-28 pt-16 sm:pb-36 sm:pt-24">
+        <div className="container-page pb-28 pt-20 sm:pb-40 sm:pt-28">
           <div className="max-w-3xl animate-fade-up">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-medium text-white/80 backdrop-blur">
               <BadgeCheck size={14} className="text-secondary-400" />
