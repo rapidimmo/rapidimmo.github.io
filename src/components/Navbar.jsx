@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { Menu, X, ArrowRight } from 'lucide-react'
 import { cn } from '../utils/helpers'
 import Logo from './Logo'
+import InstallButton from './InstallButton'
 
 const LIENS = [
   { to: '/', label: 'Accueil', end: true },
@@ -52,7 +53,8 @@ export default function Navbar() {
               {l.label}
             </NavLink>
           ))}
-          <Link to="/annonces" className="btn-primary group ml-4 !py-2.5 text-sm">
+          <InstallButton className="ml-4 !px-4 !py-2.5 text-sm" />
+          <Link to="/annonces" className="btn-primary group ml-2 !py-2.5 text-sm">
             Trouver un logement
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
           </Link>
@@ -98,6 +100,7 @@ export default function Navbar() {
             >
               Trouver un logement <ArrowRight size={16} />
             </Link>
+            <InstallButton className="mt-2 w-full !py-3" onDone={() => setOpen(false)} />
           </div>
         </div>
       )}
